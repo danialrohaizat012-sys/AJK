@@ -1,28 +1,19 @@
-# AJC Blueprint — Full Section Workspace
+# AJC Blueprint — Clean Owner Configuration
 
-Each project section now acts as an independent work package.
+This build removes all leftover demo owner names.
 
-## Workflow
-Project → Section / Installation Item → Workspace
+## Central owner configuration
+The owner identity is controlled from one place in `index.html`:
 
-## Workspace tabs
-- Overview
-- Drawing
-- Measurements
-- Site Photos
-- Materials
-- Comments
-- Revision History
+```js
+const APP_CONFIG = Object.freeze({
+  ownerName: "Rafiq Danial",
+  ownerInitials: "RD",
+  ownerRole: "Owner",
+  appName: "AJC Blueprint"
+});
+```
 
-## Functional features
-- Open any section as a workspace
-- Save multiple measurements
-- Add site-photo records
-- Build a material list
-- Add staff comments
-- Record drawing revision history automatically
-- Open each section's independent drawing editor
-- Persist everything in LocalStorage
-- Existing project, section, drawing, export, PWA and responsive features retained
+Changing those values updates the dashboard greeting, profile, comments, activities, measurement updates and revision history.
 
-Photo records are metadata placeholders in this LocalStorage prototype. Actual file uploads and live team sync require Firebase Storage and Firestore later.
+All previous project, section workspace, drawing editor, LocalStorage, PWA and responsive features remain included.

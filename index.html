@@ -172,7 +172,7 @@
         <button><span class="ico">◫</span> Reports</button>
       </nav>
       <div class="sidebar-foot">
-        <div class="profile"><div class="avatar">HZ</div><div><strong>Rafiq Danial</strong><small>Owner</small></div></div>
+        <div class="profile"><div class="avatar" data-owner-initials>RD</div><div><strong data-owner-name>Rafiq Danial</strong><small data-owner-role>Owner</small></div></div>
       </div>
     </aside>
 
@@ -420,6 +420,13 @@
   <div class="toast" id="toast">Saved successfully</div>
 
   <script>
+    const APP_CONFIG = Object.freeze({
+      ownerName: "Rafiq Danial",
+      ownerInitials: "RD",
+      ownerRole: "Owner",
+      appName: "AJC Blueprint"
+    });
+
     const STORAGE_KEYS = {
       projects: "ajc_projects_v2",
       activities: "ajc_activities_v2",
@@ -466,6 +473,12 @@
     ]);
 
     const $ = id => document.getElementById(id);
+
+    function hydrateOwnerIdentity(){
+      document.querySelectorAll("[data-owner-name]").forEach(el => el.textContent = APP_CONFIG.ownerName);
+      document.querySelectorAll("[data-owner-initials]").forEach(el => el.textContent = APP_CONFIG.ownerInitials);
+      document.querySelectorAll("[data-owner-role]").forEach(el => el.textContent = APP_CONFIG.ownerRole);
+    }
 
     function projectCard(p){
       return `<article class="project-card clickable" onclick="openProjectDetail('${p.id}')">
@@ -565,7 +578,7 @@
     function showScreen(id){
       document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));
       document.querySelectorAll("[data-screen]").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
-      $("pageTitle").textContent = id==="dashboard" ? "Good afternoon, Rafiq Danial." : id.charAt(0).toUpperCase()+id.slice(1);
+      $("pageTitle").textContent = id==="dashboard" ? `Good afternoon, ${APP_CONFIG.ownerName}.` : id.charAt(0).toUpperCase()+id.slice(1);
       window.scrollTo({top:0,behavior:"smooth"});
     }
 
@@ -622,7 +635,7 @@
       };
       if(editId){
         projects = projects.map(p=>p.id===editId ? {...p,...payload} : p);
-        addActivity("RD", `Project updated: ${name}`, `${payload.progress}% complete`, "project");
+        addActivity(APP_CONFIG.ownerInitials, `Project updated: ${name}`, `${payload.progress}% complete`, "project");
         toast("Project updated");
       } else {
         projects.unshift({
@@ -631,7 +644,7 @@
           drawings:0,
           pending:0
         });
-        addActivity("RD", `New project created: ${name}`, client, "project");
+        addActivity(APP_CONFIG.ownerInitials, `New project created: ${name}`, client, "project");
         toast("Project created");
       }
       save(STORAGE_KEYS.projects, projects);
@@ -813,7 +826,7 @@
           measurements:[]
         });
         const project = projects.find(p => p.id === activeProjectId);
-        addActivity("RD", `New section added: ${name}`, project?.name || "Project", "section");
+        addActivity(APP_CONFIG.ownerInitials, `New section added: ${name}`, project?.name || "Project", "section");
         toast("Section added");
       }
       saveSections();
@@ -1071,14 +1084,14 @@
 
       if(workspaceFormType === "measurement"){
         record.measurements.push({id:"wm"+Date.now(),label:v1,value:v2 || "0",note:v3});
-        addActivity("RD",`Measurement added: ${v1}`,`${v2 || 0} mm`,"measurement");
+        addActivity(APP_CONFIG.ownerInitials,`Measurement added: ${v1}`,`${v2 || 0} mm`,"measurement");
       } else if(workspaceFormType === "photo"){
         record.photos.push({id:"wp"+Date.now(),title:v1,stage:v2 || "Site",note:v3});
-        addActivity("RD",`Site photo logged: ${v1}`,v2 || "Site","photo");
+        addActivity(APP_CONFIG.ownerInitials,`Site photo logged: ${v1}`,v2 || "Site","photo");
       } else if(workspaceFormType === "material"){
         record.materials.push({id:"wmat"+Date.now(),name:v1,qty:v2 || "1",unit:v3 || "pcs",spec:v4,status:"Pending"});
       } else if(workspaceFormType === "comment"){
-        record.comments.push({id:"wc"+Date.now(),author:"Rafiq Danial",initials:"RD",text:v1,time:"Just now"});
+        record.comments.push({id:"wc"+Date.now(),author:APP_CONFIG.ownerName,initials:APP_CONFIG.ownerInitials,text:v1,time:"Just now"});
       }
 
       saveWorkspaceData();
@@ -1341,11 +1354,11 @@
         saveSections();
         const section = projectSections.find(s => s.id === activeSectionId);
         const project = projects.find(p => p.id === activeProjectId);
-        addActivity("RD", `Drawing saved: ${section?.name || "Section"}`, `${project?.name || "Project"} · Rev. ${drawingRevision}`, "drawing");
+        addActivity(APP_CONFIG.ownerInitials, `Drawing saved: ${section?.name || "Section"}`, `${project?.name || "Project"} · Rev. ${drawingRevision}`, "drawing");
         const wsRecord = getWorkspaceRecord(activeSectionId);
         wsRecord.revisions.push({
           revision:drawingRevision,
-          note:`Drawing saved by Rafiq Danial`,
+          note:`Drawing saved by ${APP_CONFIG.ownerName}`,
           time:new Date().toLocaleString()
         });
         saveWorkspaceData();
@@ -1400,6 +1413,7 @@
       renderDrawings();
     }
 
+    hydrateOwnerIdentity();
     renderAll();
     setTimeout(()=>$("splash").classList.add("hide"),4000);
     if("serviceWorker" in navigator){
