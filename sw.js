@@ -1,4 +1,4 @@
-const CACHE = "ajc-blueprint-v4-sections";
+const CACHE = "ajc-blueprint-v5-workspace";
 const ASSETS = [
   "./",
   "./index.html",

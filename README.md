@@ -1,21 +1,28 @@
-# AJC Blueprint — Project Sections Workflow
+# AJC Blueprint — Full Section Workspace
 
-## New hierarchy
-Project → Section / Installation Item → Drawing
+Each project section now acts as an independent work package.
 
-Example:
-- Project: Rumah Dato'
-  - Pintu Kaca Depan Rumah
-  - Pintu Kaca Belakang Rumah
+## Workflow
+Project → Section / Installation Item → Workspace
 
-## Functions
-- Open a project workspace
-- Add, edit and delete sections
-- Store section name, location, item type, quantity and status
-- Each section has an independent drawing
-- Drawing revisions are stored separately for each section
-- Open the correct drawing directly from the section card
-- Project-level section, drawing, pending and completed counts
-- All data stored in LocalStorage
+## Workspace tabs
+- Overview
+- Drawing
+- Measurements
+- Site Photos
+- Materials
+- Comments
+- Revision History
 
-Existing project management, drawing tools, PNG export, undo/redo, PWA and responsive layouts remain included.
+## Functional features
+- Open any section as a workspace
+- Save multiple measurements
+- Add site-photo records
+- Build a material list
+- Add staff comments
+- Record drawing revision history automatically
+- Open each section's independent drawing editor
+- Persist everything in LocalStorage
+- Existing project, section, drawing, export, PWA and responsive features retained
+
+Photo records are metadata placeholders in this LocalStorage prototype. Actual file uploads and live team sync require Firebase Storage and Firestore later.

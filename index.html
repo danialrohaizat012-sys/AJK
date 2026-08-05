@@ -83,7 +83,26 @@
     .section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 14px}.section-head h3{margin:0;font-size:18px}.link-btn{border:0;background:none;color:var(--blue);font-weight:700}
     .project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
     .project-card{background:white;border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:0 8px 28px rgba(17,41,72,.05);transition:.2s}
-    .project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.project-card.clickable{cursor:pointer}.section-card{background:white;border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:0 8px 28px rgba(17,41,72,.05)}.section-icon{width:52px;height:52px;border-radius:16px;background:var(--blue3);color:var(--blue);display:grid;place-items:center;font-size:25px;margin-bottom:14px}.section-card h4{margin:0 0 5px}.section-card p{margin:0;color:var(--muted);font-size:13px}.section-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.section-stat{background:var(--bg);border-radius:12px;padding:10px}.section-stat strong{display:block;font-size:16px}.section-stat span{font-size:10px;color:var(--muted)}
+    .project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.project-card.clickable{cursor:pointer}.section-card{background:white;border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:0 8px 28px rgba(17,41,72,.05)}.section-icon{width:52px;height:52px;border-radius:16px;background:var(--blue3);color:var(--blue);display:grid;place-items:center;font-size:25px;margin-bottom:14px}.section-card h4{margin:0 0 5px}.section-card p{margin:0;color:var(--muted);font-size:13px}
+.workspace-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 16px;margin-bottom:4px}
+.workspace-tab{border:1px solid var(--line);background:white;padding:11px 14px;border-radius:12px;white-space:nowrap;color:var(--muted);font-weight:700}
+.workspace-tab.active{background:var(--blue3);color:var(--blue);border-color:#BFD7F7}
+.workspace-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.workspace-card{background:white;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 28px rgba(17,41,72,.05)}
+.workspace-card h4{margin:0 0 6px}
+.workspace-card p{margin:0;color:var(--muted);font-size:13px}
+.workspace-list{display:grid;gap:10px}
+.workspace-item{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.workspace-item-main{min-width:0}.workspace-item-main strong{display:block;margin-bottom:4px}.workspace-item-main small{color:var(--muted)}
+.workspace-empty{padding:34px;text-align:center;color:var(--muted);background:white;border:1px dashed var(--line);border-radius:18px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.photo-card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.photo-placeholder{height:150px;background:linear-gradient(145deg,#DCE9F7,#9EB8D1);display:grid;place-items:center;font-size:32px}
+.photo-card div:last-child{padding:12px}
+.badge{display:inline-flex;padding:6px 9px;border-radius:999px;font-size:11px;font-weight:800}
+@media(max-width:820px){.workspace-grid{grid-template-columns:1fr 1fr}.photo-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.workspace-grid{grid-template-columns:1fr}.photo-grid{grid-template-columns:1fr}}
+.section-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.section-stat{background:var(--bg);border-radius:12px;padding:10px}.section-stat strong{display:block;font-size:16px}.section-stat span{font-size:10px;color:var(--muted)}
     .project-image{height:145px;border-radius:16px;background:linear-gradient(145deg,#DCE9F7,#B9CDE2);position:relative;overflow:hidden}
     .building{position:absolute;left:18%;bottom:0;width:64%;height:76%;background:linear-gradient(90deg,#243D53,#4E718D);clip-path:polygon(10% 25%,50% 0,100% 22%,100% 100%,0 100%,0 38%)}
     .building:before{content:"";position:absolute;inset:22% 10% 10%;background:repeating-linear-gradient(90deg,rgba(198,232,255,.75) 0 15%,transparent 15% 22%),repeating-linear-gradient(0deg,transparent 0 22%,rgba(255,255,255,.55) 22% 25%)}
@@ -153,7 +172,7 @@
         <button><span class="ico">◫</span> Reports</button>
       </nav>
       <div class="sidebar-foot">
-        <div class="profile"><div class="avatar">HZ</div><div><strong>Haziq</strong><small>Owner</small></div></div>
+        <div class="profile"><div class="avatar">HZ</div><div><strong>Rafiq Danial</strong><small>Owner</small></div></div>
       </div>
     </aside>
 
@@ -164,7 +183,7 @@
       </header>
 
       <div class="topbar">
-        <div class="hello"><h1 id="pageTitle">Good afternoon, Haziq.</h1><p>Here is what is happening across your projects.</p></div>
+        <div class="hello"><h1 id="pageTitle">Good afternoon, Rafiq Danial.</h1><p>Here is what is happening across your projects.</p></div>
         <div class="top-actions"><button class="ghost-btn" id="exportBtn">↗ Export</button><button class="ghost-btn" id="resetBtn">Reset</button><button class="primary-btn" id="newProjectBtn">＋ New Project</button></div>
       </div>
 
@@ -241,6 +260,29 @@
         </div>
       </section>
 
+
+      <section id="sectionWorkspace" class="screen">
+        <div class="toolbar-row">
+          <button class="ghost-btn" id="backToProjectDetail">← Back</button>
+          <div style="flex:1">
+            <h2 id="workspaceSectionName" style="margin:0 0 4px">Section Workspace</h2>
+            <p id="workspaceSectionMeta" style="margin:0;color:var(--muted)">Location · Type</p>
+          </div>
+          <button class="primary-btn" id="workspaceOpenDrawing">Open Drawing Editor</button>
+        </div>
+
+        <div class="workspace-tabs" id="workspaceTabs">
+          <button class="workspace-tab active" data-tab="overview">Overview</button>
+          <button class="workspace-tab" data-tab="drawing">Drawing</button>
+          <button class="workspace-tab" data-tab="measurements">Measurements</button>
+          <button class="workspace-tab" data-tab="photos">Site Photos</button>
+          <button class="workspace-tab" data-tab="materials">Materials</button>
+          <button class="workspace-tab" data-tab="comments">Comments</button>
+          <button class="workspace-tab" data-tab="revisions">Revision History</button>
+        </div>
+
+        <div id="workspaceContent"></div>
+      </section>
       <section id="editor" class="screen">
         <div class="editor-shell">
           <div class="tools" id="drawingTools">
@@ -358,6 +400,19 @@
       <div class="modal-actions">
         <button class="ghost-btn" id="cancelSectionModal">Cancel</button>
         <button class="primary-btn" id="confirmSectionModal">Add Section</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="workspaceModal">
+    <div class="modal-card">
+      <h3 id="workspaceModalTitle">Add item</h3>
+      <p id="workspaceModalDesc">Add information to this section.</p>
+      <div id="workspaceModalFields"></div>
+      <div class="modal-actions">
+        <button class="ghost-btn" id="cancelWorkspaceModal">Cancel</button>
+        <button class="primary-btn" id="saveWorkspaceModal">Save</button>
       </div>
     </div>
   </div>
@@ -510,7 +565,7 @@
     function showScreen(id){
       document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));
       document.querySelectorAll("[data-screen]").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
-      $("pageTitle").textContent = id==="dashboard" ? "Good afternoon, Haziq." : id.charAt(0).toUpperCase()+id.slice(1);
+      $("pageTitle").textContent = id==="dashboard" ? "Good afternoon, Rafiq Danial." : id.charAt(0).toUpperCase()+id.slice(1);
       window.scrollTo({top:0,behavior:"smooth"});
     }
 
@@ -567,7 +622,7 @@
       };
       if(editId){
         projects = projects.map(p=>p.id===editId ? {...p,...payload} : p);
-        addActivity("HZ", `Project updated: ${name}`, `${payload.progress}% complete`, "project");
+        addActivity("RD", `Project updated: ${name}`, `${payload.progress}% complete`, "project");
         toast("Project updated");
       } else {
         projects.unshift({
@@ -576,7 +631,7 @@
           drawings:0,
           pending:0
         });
-        addActivity("HZ", `New project created: ${name}`, client, "project");
+        addActivity("RD", `New project created: ${name}`, client, "project");
         toast("Project created");
       }
       save(STORAGE_KEYS.projects, projects);
@@ -691,7 +746,7 @@
         </div>
         <div style="font-size:12px;font-weight:800;color:${statusColor};margin-bottom:12px">${escapeHtml(section.status)}</div>
         <div class="card-actions">
-          <button class="mini-btn" onclick="startSectionDrawing('${section.id}')">Open Drawing</button>
+          <button class="mini-btn" onclick="openSectionWorkspace('${section.id}')">Open Workspace</button>
           <button class="mini-btn" onclick="editSection('${section.id}')">Edit</button>
           <button class="mini-btn danger" onclick="deleteSection('${section.id}')">Delete</button>
         </div>
@@ -758,7 +813,7 @@
           measurements:[]
         });
         const project = projects.find(p => p.id === activeProjectId);
-        addActivity("HZ", `New section added: ${name}`, project?.name || "Project", "section");
+        addActivity("RD", `New section added: ${name}`, project?.name || "Project", "section");
         toast("Section added");
       }
       saveSections();
@@ -799,6 +854,247 @@
     };
 
     $("backToProjects").onclick = () => showScreen("projects");
+
+
+    // ---------- Full section workspace ----------
+    const WORKSPACE_KEY = "ajc_section_workspace_v1";
+    let sectionWorkspaceData = load(WORKSPACE_KEY, []);
+    let activeWorkspaceTab = "overview";
+
+    function getWorkspaceRecord(sectionId){
+      let record = sectionWorkspaceData.find(r => r.sectionId === sectionId);
+      if(!record){
+        record = {
+          sectionId,
+          measurements:[],
+          photos:[],
+          materials:[],
+          comments:[],
+          revisions:[]
+        };
+        sectionWorkspaceData.push(record);
+        save(WORKSPACE_KEY, sectionWorkspaceData);
+      }
+      return record;
+    }
+
+    function saveWorkspaceData(){
+      save(WORKSPACE_KEY, sectionWorkspaceData);
+    }
+
+    window.openSectionWorkspace = id => {
+      const section = projectSections.find(s => s.id === id);
+      if(!section) return;
+      activeSectionId = id;
+      activeProjectId = section.projectId;
+      getWorkspaceRecord(id);
+      $("workspaceSectionName").textContent = section.name;
+      $("workspaceSectionMeta").textContent = `${section.location} · ${section.type} · Qty ${section.qty}`;
+      activeWorkspaceTab = "overview";
+      renderWorkspace();
+      showScreen("sectionWorkspace");
+    };
+
+    $("backToProjectDetail").onclick = () => {
+      renderSections();
+      showScreen("projectDetail");
+    };
+
+    $("workspaceOpenDrawing").onclick = () => {
+      if(activeSectionId) startSectionDrawing(activeSectionId);
+    };
+
+    document.querySelectorAll(".workspace-tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeWorkspaceTab = btn.dataset.tab;
+        renderWorkspace();
+      });
+    });
+
+    function workspaceSection(){
+      return projectSections.find(s => s.id === activeSectionId);
+    }
+
+    function workspaceRecord(){
+      return getWorkspaceRecord(activeSectionId);
+    }
+
+    function renderWorkspace(){
+      const section = workspaceSection();
+      const record = workspaceRecord();
+      if(!section || !record) return;
+      document.querySelectorAll(".workspace-tab").forEach(btn => btn.classList.toggle("active", btn.dataset.tab === activeWorkspaceTab));
+
+      const content = $("workspaceContent");
+
+      if(activeWorkspaceTab === "overview"){
+        const drawingReady = section.drawingObjects?.length > 0;
+        content.innerHTML = `
+          <div class="workspace-grid">
+            <div class="workspace-card"><h4>Drawing</h4><p>${drawingReady ? `${section.drawingObjects.length} objects · Rev. ${section.revision}` : "Not started"}</p><div class="card-actions"><button class="mini-btn" onclick="startSectionDrawing('${section.id}')">${drawingReady ? "Continue Drawing" : "Start Drawing"}</button></div></div>
+            <div class="workspace-card"><h4>Measurements</h4><p>${record.measurements.length} records saved</p><div class="card-actions"><button class="mini-btn" onclick="openWorkspaceTab('measurements')">View Measurements</button></div></div>
+            <div class="workspace-card"><h4>Site Photos</h4><p>${record.photos.length} photos logged</p><div class="card-actions"><button class="mini-btn" onclick="openWorkspaceTab('photos')">View Photos</button></div></div>
+            <div class="workspace-card"><h4>Materials</h4><p>${record.materials.length} material items</p><div class="card-actions"><button class="mini-btn" onclick="openWorkspaceTab('materials')">View Materials</button></div></div>
+            <div class="workspace-card"><h4>Comments</h4><p>${record.comments.length} comments</p><div class="card-actions"><button class="mini-btn" onclick="openWorkspaceTab('comments')">View Discussion</button></div></div>
+            <div class="workspace-card"><h4>Revision History</h4><p>${record.revisions.length} recorded revisions</p><div class="card-actions"><button class="mini-btn" onclick="openWorkspaceTab('revisions')">View History</button></div></div>
+          </div>`;
+        return;
+      }
+
+      if(activeWorkspaceTab === "drawing"){
+        content.innerHTML = `
+          <div class="workspace-card">
+            <h4>${escapeHtml(section.name)}</h4>
+            <p>${section.drawingObjects?.length ? `${section.drawingObjects.length} drawing objects saved · Revision ${section.revision}` : "No drawing created yet."}</p>
+            <div class="card-actions"><button class="primary-btn" onclick="startSectionDrawing('${section.id}')">${section.drawingObjects?.length ? "Continue Drawing" : "Start Drawing"}</button></div>
+          </div>`;
+        return;
+      }
+
+      if(activeWorkspaceTab === "measurements"){
+        content.innerHTML = `
+          <div class="section-head"><h3>Measurements</h3><button class="primary-btn" onclick="openWorkspaceForm('measurement')">＋ Add Measurement</button></div>
+          <div class="workspace-list">
+            ${record.measurements.length ? record.measurements.map(m => `
+              <div class="workspace-item">
+                <div class="workspace-item-main"><strong>${escapeHtml(m.label)}</strong><small>${escapeHtml(m.value)} mm · ${escapeHtml(m.note || "No note")}</small></div>
+                <button class="mini-btn danger" onclick="deleteWorkspaceItem('measurements','${m.id}')">Delete</button>
+              </div>`).join("") : '<div class="workspace-empty">No measurements yet.</div>'}
+          </div>`;
+        return;
+      }
+
+      if(activeWorkspaceTab === "photos"){
+        content.innerHTML = `
+          <div class="section-head"><h3>Site Photos</h3><button class="primary-btn" onclick="openWorkspaceForm('photo')">＋ Add Photo Record</button></div>
+          <div class="photo-grid">
+            ${record.photos.length ? record.photos.map(p => `
+              <div class="photo-card"><div class="photo-placeholder">▧</div><div><strong>${escapeHtml(p.title)}</strong><p>${escapeHtml(p.stage)} · ${escapeHtml(p.note || "")}</p></div></div>`).join("") : '<div class="workspace-empty" style="grid-column:1/-1">No site photos logged yet.</div>'}
+          </div>`;
+        return;
+      }
+
+      if(activeWorkspaceTab === "materials"){
+        content.innerHTML = `
+          <div class="section-head"><h3>Material List</h3><button class="primary-btn" onclick="openWorkspaceForm('material')">＋ Add Material</button></div>
+          <div class="workspace-list">
+            ${record.materials.length ? record.materials.map(m => `
+              <div class="workspace-item">
+                <div class="workspace-item-main"><strong>${escapeHtml(m.name)}</strong><small>${escapeHtml(m.qty)} ${escapeHtml(m.unit)} · ${escapeHtml(m.spec || "No specification")}</small></div>
+                <span class="badge" style="background:${m.status==="Ready"?"#EAF8EF":"#FFF4DF"};color:${m.status==="Ready"?"var(--green)":"var(--orange)"}">${escapeHtml(m.status)}</span>
+              </div>`).join("") : '<div class="workspace-empty">No materials added yet.</div>'}
+          </div>`;
+        return;
+      }
+
+      if(activeWorkspaceTab === "comments"){
+        content.innerHTML = `
+          <div class="section-head"><h3>Comments</h3><button class="primary-btn" onclick="openWorkspaceForm('comment')">＋ Add Comment</button></div>
+          <div class="workspace-list">
+            ${record.comments.length ? record.comments.map(c => `
+              <div class="workspace-item"><div class="dot-avatar">${escapeHtml(c.initials)}</div><div class="workspace-item-main" style="flex:1"><strong>${escapeHtml(c.author)}</strong><small>${escapeHtml(c.text)} · ${escapeHtml(c.time)}</small></div></div>`).join("") : '<div class="workspace-empty">No comments yet.</div>'}
+          </div>`;
+        return;
+      }
+
+      if(activeWorkspaceTab === "revisions"){
+        content.innerHTML = `
+          <div class="section-head"><h3>Revision History</h3></div>
+          <div class="workspace-list">
+            ${record.revisions.length ? record.revisions.slice().reverse().map(r => `
+              <div class="workspace-item"><div class="workspace-item-main"><strong>Revision ${r.revision}</strong><small>${escapeHtml(r.note)} · ${escapeHtml(r.time)}</small></div><span class="badge" style="background:var(--blue3);color:var(--blue)">Saved</span></div>`).join("") : '<div class="workspace-empty">No saved revisions yet.</div>'}
+          </div>`;
+      }
+    }
+
+    window.openWorkspaceTab = tab => {
+      activeWorkspaceTab = tab;
+      renderWorkspace();
+    };
+
+    const workspaceModal = $("workspaceModal");
+    let workspaceFormType = null;
+
+    window.openWorkspaceForm = type => {
+      workspaceFormType = type;
+      const title = $("workspaceModalTitle");
+      const desc = $("workspaceModalDesc");
+      const fields = $("workspaceModalFields");
+
+      if(type === "measurement"){
+        title.textContent = "Add measurement";
+        desc.textContent = "Record an important site or fabrication measurement.";
+        fields.innerHTML = `
+          <div class="field"><label>LABEL</label><input id="wsField1" placeholder="e.g. Opening Width"></div>
+          <div class="field"><label>VALUE (MM)</label><input id="wsField2" type="number" placeholder="1245"></div>
+          <div class="field"><label>NOTE</label><input id="wsField3" placeholder="Optional note"></div>`;
+      } else if(type === "photo"){
+        title.textContent = "Add site photo record";
+        desc.textContent = "Prototype mode stores photo metadata locally.";
+        fields.innerHTML = `
+          <div class="field"><label>TITLE</label><input id="wsField1" placeholder="e.g. Before Installation"></div>
+          <div class="field"><label>STAGE</label><input id="wsField2" placeholder="Before / During / Complete"></div>
+          <div class="field"><label>NOTE</label><input id="wsField3" placeholder="Photo description"></div>`;
+      } else if(type === "material"){
+        title.textContent = "Add material";
+        desc.textContent = "Build the item-specific material list.";
+        fields.innerHTML = `
+          <div class="field"><label>MATERIAL NAME</label><input id="wsField1" placeholder="e.g. Aluminium Frame 4 inch"></div>
+          <div class="field"><label>QUANTITY</label><input id="wsField2" type="number" value="1"></div>
+          <div class="field"><label>UNIT</label><input id="wsField3" placeholder="pcs / ft / sheet"></div>
+          <div class="field"><label>SPECIFICATION</label><input id="wsField4" placeholder="Colour, thickness, code"></div>`;
+      } else if(type === "comment"){
+        title.textContent = "Add comment";
+        desc.textContent = "Leave an instruction or site update for the team.";
+        fields.innerHTML = `
+          <div class="field"><label>COMMENT</label><input id="wsField1" placeholder="Write an update or instruction"></div>`;
+      }
+      workspaceModal.classList.add("show");
+    };
+
+    $("cancelWorkspaceModal").onclick = () => workspaceModal.classList.remove("show");
+    workspaceModal.addEventListener("click", e => {
+      if(e.target === workspaceModal) workspaceModal.classList.remove("show");
+    });
+
+    $("saveWorkspaceModal").onclick = () => {
+      const record = workspaceRecord();
+      const v1 = $("wsField1")?.value.trim() || "";
+      const v2 = $("wsField2")?.value.trim() || "";
+      const v3 = $("wsField3")?.value.trim() || "";
+      const v4 = $("wsField4")?.value.trim() || "";
+
+      if(!v1){
+        toast("Complete the main field");
+        return;
+      }
+
+      if(workspaceFormType === "measurement"){
+        record.measurements.push({id:"wm"+Date.now(),label:v1,value:v2 || "0",note:v3});
+        addActivity("RD",`Measurement added: ${v1}`,`${v2 || 0} mm`,"measurement");
+      } else if(workspaceFormType === "photo"){
+        record.photos.push({id:"wp"+Date.now(),title:v1,stage:v2 || "Site",note:v3});
+        addActivity("RD",`Site photo logged: ${v1}`,v2 || "Site","photo");
+      } else if(workspaceFormType === "material"){
+        record.materials.push({id:"wmat"+Date.now(),name:v1,qty:v2 || "1",unit:v3 || "pcs",spec:v4,status:"Pending"});
+      } else if(workspaceFormType === "comment"){
+        record.comments.push({id:"wc"+Date.now(),author:"Rafiq Danial",initials:"RD",text:v1,time:"Just now"});
+      }
+
+      saveWorkspaceData();
+      renderActivities();
+      workspaceModal.classList.remove("show");
+      renderWorkspace();
+      toast("Saved to section workspace");
+    };
+
+    window.deleteWorkspaceItem = (collection,id) => {
+      const record = workspaceRecord();
+      record[collection] = record[collection].filter(item => item.id !== id);
+      saveWorkspaceData();
+      renderWorkspace();
+      toast("Item deleted");
+    };
 
     // ---------- Functional SVG drawing editor ----------
     const DRAWING_KEY = "ajc_interactive_drawing_v1";
@@ -1045,7 +1341,14 @@
         saveSections();
         const section = projectSections.find(s => s.id === activeSectionId);
         const project = projects.find(p => p.id === activeProjectId);
-        addActivity("HZ", `Drawing saved: ${section?.name || "Section"}`, `${project?.name || "Project"} · Rev. ${drawingRevision}`, "drawing");
+        addActivity("RD", `Drawing saved: ${section?.name || "Section"}`, `${project?.name || "Project"} · Rev. ${drawingRevision}`, "drawing");
+        const wsRecord = getWorkspaceRecord(activeSectionId);
+        wsRecord.revisions.push({
+          revision:drawingRevision,
+          note:`Drawing saved by Rafiq Danial`,
+          time:new Date().toLocaleString()
+        });
+        saveWorkspaceData();
       }else{
         localStorage.setItem(DRAWING_KEY, JSON.stringify(drawingObjects));
         localStorage.setItem("ajc_drawing_revision", drawingRevision);
