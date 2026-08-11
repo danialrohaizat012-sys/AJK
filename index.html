@@ -302,6 +302,7 @@
                 <button class="ghost-btn" id="undoDrawing">↶</button>
                 <button class="ghost-btn" id="redoDrawing">↷</button>
                 <button class="ghost-btn" id="exportDrawing">Export PNG</button>
+                <button class="ghost-btn" id="exportDrawingPdf">Export PDF</button>
                 <button class="primary-btn" id="saveDrawing">Save</button>
               </div>
             </div>
@@ -419,6 +420,7 @@
 
   <div class="toast" id="toast">Saved successfully</div>
 
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script>
     const APP_CONFIG = Object.freeze({
       ownerName: "Rafiq Danial",
@@ -1403,6 +1405,109 @@
         toast("Drawing exported as PNG");
       };
       image.src=url;
+    };
+
+    async function svgToPngDataUrl(scale=2){
+      const clone = drawingSvg.cloneNode(true);
+      clone.querySelector("#interactionSurface")?.remove();
+      clone.setAttribute("xmlns","http://www.w3.org/2000/svg");
+      const source = new XMLSerializer().serializeToString(clone);
+      const svgBlob = new Blob([source],{type:"image/svg+xml;charset=utf-8"});
+      const url = URL.createObjectURL(svgBlob);
+      try{
+        const image = new Image();
+        await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url});
+        const canvas=document.createElement("canvas");
+        canvas.width=900*scale; canvas.height=520*scale;
+        const ctx=canvas.getContext("2d");
+        ctx.fillStyle="#ffffff";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(image,0,0,canvas.width,canvas.height);
+        return canvas.toDataURL("image/png",1.0);
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    $("exportDrawingPdf").onclick=async()=>{
+      try{
+        const pngData = await svgToPngDataUrl(2.4);
+        const section = activeSectionId ? projectSections.find(s=>s.id===activeSectionId) : null;
+        const project = activeProjectId ? projects.find(p=>p.id===activeProjectId) : null;
+        const projectName = project?.name || "AJC Project";
+        const sectionName = section?.name || "Drawing";
+        const revision = section?.revision ?? drawingRevision;
+        const exported = new Date();
+
+        if(window.jspdf?.jsPDF){
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({orientation:"landscape",unit:"mm",format:"a4",compress:true});
+          const pageW = pdf.internal.pageSize.getWidth();
+          const pageH = pdf.internal.pageSize.getHeight();
+
+          // Header band
+          pdf.setFillColor(11,79,138);
+          pdf.rect(0,0,pageW,27,"F");
+          pdf.setTextColor(255,255,255);
+          pdf.setFont("helvetica","bold");
+          pdf.setFontSize(17);
+          pdf.text("AJC BLUEPRINT",14,11);
+          pdf.setFontSize(10);
+          pdf.setFont("helvetica","normal");
+          pdf.text("Every Measurement Matters",14,18);
+          pdf.text(`Revision ${revision}`,pageW-14,11,{align:"right"});
+          pdf.text(exported.toLocaleString(),pageW-14,18,{align:"right"});
+
+          // Project information
+          pdf.setTextColor(23,32,43);
+          pdf.setFont("helvetica","bold");
+          pdf.setFontSize(14);
+          pdf.text(projectName,14,37);
+          pdf.setFontSize(11);
+          pdf.text(sectionName,14,44);
+          pdf.setFont("helvetica","normal");
+          pdf.setTextColor(96,108,122);
+          pdf.setFontSize(9);
+          if(section){
+            pdf.text(`${section.location || ""}  |  ${section.type || ""}  |  Qty ${section.qty || 1}`,14,50);
+          }
+
+          // Drawing frame
+          const x=14, y=57, maxW=pageW-28, maxH=pageH-74;
+          const aspect=900/520;
+          let w=maxW, h=w/aspect;
+          if(h>maxH){h=maxH;w=h*aspect;}
+          const dx=x+(maxW-w)/2;
+          const dy=y+(maxH-h)/2;
+          pdf.setDrawColor(210,218,228);
+          pdf.roundedRect(dx-2,dy-2,w+4,h+4,2,2,"S");
+          pdf.addImage(pngData,"PNG",dx,dy,w,h,undefined,"FAST");
+
+          // Footer
+          pdf.setDrawColor(230,234,240);
+          pdf.line(14,pageH-11,pageW-14,pageH-11);
+          pdf.setFontSize(8);
+          pdf.setTextColor(109,119,133);
+          pdf.text(`Prepared in AJC Blueprint by ${APP_CONFIG.ownerName}`,14,pageH-6);
+          pdf.text(`Page 1 of 1`,pageW-14,pageH-6,{align:"right"});
+
+          const safeProject=projectName.replace(/[^a-z0-9_-]+/gi,"-").replace(/^-+|-+$/g,"");
+          const safeSection=sectionName.replace(/[^a-z0-9_-]+/gi,"-").replace(/^-+|-+$/g,"");
+          pdf.save(`${safeProject}-${safeSection}-Rev-${revision}.pdf`);
+          toast("Drawing PDF exported");
+          return;
+        }
+
+        // Fallback when jsPDF cannot load: open a print-ready document.
+        const win=window.open("","_blank");
+        if(!win) throw new Error("Popup blocked");
+        win.document.write(`<!doctype html><html><head><title>${sectionName}</title><style>@page{size:A4 landscape;margin:12mm}body{font-family:Arial,sans-serif;color:#17202b;margin:0}.head{background:#0b4f8a;color:white;padding:18px 22px}.head h1{margin:0 0 4px;font-size:24px}.meta{padding:16px 22px;border-bottom:1px solid #ddd}.drawing{padding:18px}.drawing img{width:100%;height:auto}.foot{padding:10px 22px;color:#6d7785;font-size:11px}</style></head><body><div class="head"><h1>AJC BLUEPRINT</h1><div>Every Measurement Matters</div></div><div class="meta"><strong>${projectName}</strong><br>${sectionName}<br>Revision ${revision} · ${exported.toLocaleString()}</div><div class="drawing"><img src="${pngData}"></div><div class="foot">Prepared by ${APP_CONFIG.ownerName}</div><script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script></body></html>`);
+        win.document.close();
+        toast("PDF print view opened");
+      }catch(err){
+        console.error(err);
+        toast("Unable to export PDF");
+      }
     };
 
     loadDrawing();
