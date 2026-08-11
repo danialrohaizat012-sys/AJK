@@ -127,7 +127,7 @@
     .tools{padding:12px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:7px}.tool{border:0;background:white;border-radius:12px;padding:10px 5px;font-size:10px;color:var(--muted)}.tool span{font-size:20px;display:block;margin-bottom:4px}.tool.active{background:var(--blue3);color:var(--blue)}
     .canvas-wrap{display:flex;flex-direction:column;min-width:0}.canvas-top{height:60px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px}.canvas{flex:1;position:relative;overflow:auto;background-image:linear-gradient(#EEF2F6 1px,transparent 1px),linear-gradient(90deg,#EEF2F6 1px,transparent 1px);background-size:24px 24px;padding:40px}
     .drawing{min-width:760px;background:rgba(255,255,255,.91);border:1px solid #D4DAE1;border-radius:14px;padding:28px;box-shadow:0 16px 40px rgba(21,50,75,.08)}
-    .window-svg{width:100%;height:auto;touch-action:none;user-select:none}.window-svg.tool-frame,.window-svg.tool-glass,.window-svg.tool-measure,.window-svg.tool-arrow{cursor:crosshair}.window-svg.tool-text{cursor:text}.drawing-object{cursor:pointer}.measure-card{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);padding:13px 17px;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);font-size:13px}.measure-card strong{color:var(--green)}
+    .window-svg{width:100%;height:auto;touch-action:none;user-select:none}.window-svg.tool-frame,.window-svg.tool-glass,.window-svg.tool-measure,.window-svg.tool-line,.window-svg.tool-arrow{cursor:crosshair}.window-svg.tool-text{cursor:text}.drawing-object{cursor:pointer}.measure-card{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);padding:13px 17px;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);font-size:13px}.measure-card strong{color:var(--green)}
     .floating-zoom{position:absolute;right:18px;top:18px;background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden}.floating-zoom button{display:block;border:0;background:white;width:38px;height:38px}
 
     .mobile-nav{display:none}
@@ -167,6 +167,7 @@
         <button data-screen="projects"><span class="ico">▦</span> Projects</button>
         <button data-screen="drawings"><span class="ico">⌑</span> Drawings</button>
         <button data-screen="editor"><span class="ico">✎</span> Drawing Editor</button>
+        <button data-screen="punchcard"><span class="ico">◷</span> Punch Card</button>
         <button><span class="ico">⌁</span> Site Photos</button>
         <button><span class="ico">↻</span> Revisions</button>
         <button><span class="ico">◫</span> Reports</button>
@@ -228,7 +229,7 @@
             <h2 id="detailProjectName" style="margin:0 0 4px">Project</h2>
             <p id="detailProjectMeta" style="margin:0;color:var(--muted)">Client · Address</p>
           </div>
-          <button class="primary-btn" id="addSectionBtn">＋ Add Section</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ghost-btn" id="googleMapsBtn">Google Maps</button><button class="ghost-btn" id="wazeBtn">Waze</button><button class="primary-btn" id="addSectionBtn">＋ Add Section</button></div>
         </div>
 
         <div class="hero" style="margin-bottom:18px">
@@ -283,6 +284,32 @@
 
         <div id="workspaceContent"></div>
       </section>
+
+      <section id="punchcard" class="screen">
+        <div class="hero" style="margin-bottom:18px">
+          <div class="hero-top"><div><h2>Punch Card</h2><p>Local attendance prototype for AJC field staff.</p></div><span id="punchStatus">Not punched in</span></div>
+          <div class="metrics">
+            <div class="metric"><strong id="todayPunchIn">--:--</strong><span>Today's Punch In</span></div>
+            <div class="metric"><strong id="todayPunchOut">--:--</strong><span>Today's Punch Out</span></div>
+            <div class="metric"><strong id="todayHours">0.0</strong><span>Hours Today</span></div>
+            <div class="metric"><strong id="attendanceCount">0</strong><span>Attendance Records</span></div>
+          </div>
+        </div>
+        <div class="activity-layout">
+          <div class="panel">
+            <div class="field"><label>STAFF NAME</label><input id="punchStaffName" value="Rafiq Danial"></div>
+            <div class="field"><label>PROJECT / SITE</label><input id="punchProject" placeholder="Optional project/site"></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="primary-btn" id="punchInBtn">Punch In</button>
+              <button class="ghost-btn" id="punchOutBtn">Punch Out</button>
+            </div>
+          </div>
+          <div class="panel"><strong>Today's note</strong><p style="color:var(--muted)">Punch records are stored on this device only until Firebase is connected.</p></div>
+        </div>
+        <div class="section-head"><h3>Attendance History</h3></div>
+        <div id="attendanceList" class="workspace-list"></div>
+      </section>
+
       <section id="editor" class="screen">
         <div class="editor-shell">
           <div class="tools" id="drawingTools">
@@ -290,6 +317,7 @@
             <button class="tool" data-tool="frame"><span>▭</span>Frame</button>
             <button class="tool" data-tool="glass"><span>◇</span>Glass</button>
             <button class="tool" data-tool="measure"><span>↔</span>Measure</button>
+            <button class="tool" data-tool="line"><span>／</span>Line</button>
             <button class="tool" data-tool="arrow"><span>➜</span>Arrow</button>
             <button class="tool" data-tool="text"><span>T</span>Text</button>
             <button class="tool" data-tool="delete"><span>⌫</span>Delete</button>
@@ -316,7 +344,7 @@
                     <style>
                       .draw-frame{fill:rgba(255,255,255,.55);stroke:#334155;stroke-width:3}
                       .draw-glass{fill:rgba(21,101,192,.11);stroke:#1565C0;stroke-width:2}
-                      .draw-arrow,.draw-measure{fill:none;stroke:#1565C0;stroke-width:3}
+                      .draw-arrow,.draw-measure,.draw-line{fill:none;stroke:#1565C0;stroke-width:3}
                       .draw-text{font:22px Inter;fill:#17202B}
                       .draw-label{font:18px Inter;fill:#1565C0}
                       .selected{filter:drop-shadow(0 0 5px rgba(21,101,192,.9));stroke:#F59E0B!important;stroke-width:4!important}
@@ -344,7 +372,7 @@
     <button data-screen="projects"><span>▦</span>Projects</button>
     <button data-screen="drawings"><span>⌑</span>Drawings</button>
     <button data-screen="editor"><span>✎</span>Editor</button>
-    <button><span>○</span>Profile</button>
+    <button data-screen="punchcard"><span>◷</span>Punch</button>
   </nav>
   <button class="fab" id="fab">＋</button>
 
@@ -356,6 +384,7 @@
       <div class="field"><label>PROJECT NAME</label><input id="projectNameInput" placeholder="e.g. Banglo Tok Bali"></div>
       <div class="field"><label>CLIENT NAME</label><input id="clientNameInput" placeholder="e.g. Dato' Razak"></div>
       <div class="field"><label>SITE ADDRESS</label><input id="addressInput" placeholder="Enter project address"></div>
+      <div class="field"><label>MAPS LINK / COORDINATES (OPTIONAL)</label><input id="mapInput" placeholder="Google Maps link, latitude,longitude or leave blank"></div>
       <div class="field"><label>PROGRESS (%)</label><input id="progressInput" type="number" min="0" max="100" value="0"></div>
       <div class="modal-actions">
         <button class="ghost-btn" id="cancelModal">Cancel</button>
@@ -389,6 +418,21 @@
       <div class="field"><label>LOCATION</label><input id="sectionLocationInput" placeholder="e.g. Front Entrance"></div>
       <div class="field"><label>TYPE</label><input id="sectionTypeInput" placeholder="e.g. Sliding Glass Door"></div>
       <div class="field"><label>QUANTITY</label><input id="sectionQtyInput" type="number" min="1" value="1"></div>
+      <div class="field"><label>DOOR / WINDOW TEMPLATE</label>
+        <select id="sectionTemplateInput" style="width:100%;height:48px;border:1px solid var(--line);border-radius:14px;padding:0 14px;background:white">
+          <option value="custom">Custom</option>
+          <option value="2door-sliding">2 Pintu Sliding</option>
+          <option value="2door-swing">2 Pintu Swing</option>
+        </select>
+      </div>
+      <div class="field"><label>FRAME COLOUR</label><input id="frameColourInput" placeholder="e.g. Black / Silver / White"></div>
+      <div class="field"><label>GLASS COLOUR</label><input id="glassColourInput" placeholder="e.g. Clear / Green / Dark Grey"></div>
+      <div class="field"><label>GLASS TYPE</label>
+        <select id="glassTypeInput" style="width:100%;height:48px;border:1px solid var(--line);border-radius:14px;padding:0 14px;background:white">
+          <option>Normal</option><option>Tempered</option><option>Laminated</option>
+        </select>
+      </div>
+      <div class="field"><label>GLASS THICKNESS (MM)</label><input id="glassThicknessInput" type="number" min="1" step="0.5" placeholder="e.g. 10"></div>
       <div class="field"><label>STATUS</label>
         <select id="sectionStatusInput" style="width:100%;height:48px;border:1px solid var(--line);border-radius:14px;padding:0 14px;background:white">
           <option>Pending Measurement</option>
@@ -593,6 +637,7 @@
       $("clientNameInput").value = project?.client || "";
       $("addressInput").value = project?.address || "";
       $("progressInput").value = project?.progress ?? 0;
+      $("mapInput").value = project?.map || "";
       $("modalTitle").textContent = project ? "Edit project" : "Add new project";
       $("modalDesc").textContent = project ? "Update project information stored on this device." : "Create a new project workspace.";
       $("confirmModal").textContent = project ? "Save Changes" : "Create Project";
@@ -633,6 +678,7 @@
         client,
         address:$("addressInput").value.trim(),
         progress:Math.max(0,Math.min(100,Number($("progressInput").value)||0)),
+        map:$("mapInput").value.trim(),
         updated:"Just now"
       };
       if(editId){
@@ -753,7 +799,7 @@
       return `<article class="section-card">
         <div class="section-icon">▱</div>
         <h4>${escapeHtml(section.name)}</h4>
-        <p>${escapeHtml(section.location)} · ${escapeHtml(section.type)}</p>
+        <p>${escapeHtml(section.location)} · ${escapeHtml(section.type)}</p><p style="margin-top:5px">Frame: ${escapeHtml(section.frameColour||"-")} · Glass: ${escapeHtml(section.glassType||"Normal")} ${escapeHtml(section.glassThickness||"-")}mm ${escapeHtml(section.glassColour||"")}</p>
         <div class="section-stats">
           <div class="section-stat"><strong>${section.qty}</strong><span>QUANTITY</span></div>
           <div class="section-stat"><strong>${section.revision || 0}</strong><span>REVISION</span></div>
@@ -786,6 +832,11 @@
       $("sectionTypeInput").value = section?.type || "";
       $("sectionQtyInput").value = section?.qty || 1;
       $("sectionStatusInput").value = section?.status || "Pending Measurement";
+      $("sectionTemplateInput").value = section?.template || "custom";
+      $("frameColourInput").value = section?.frameColour || "";
+      $("glassColourInput").value = section?.glassColour || "";
+      $("glassTypeInput").value = section?.glassType || "Normal";
+      $("glassThicknessInput").value = section?.glassThickness || "";
       $("sectionModalTitle").textContent = section ? "Edit section" : "Add project section";
       $("confirmSectionModal").textContent = section ? "Save Changes" : "Add Section";
       sectionModal.classList.add("show");
@@ -813,7 +864,12 @@
         location:$("sectionLocationInput").value.trim() || "Unspecified location",
         type:$("sectionTypeInput").value.trim() || "Aluminium & Glass",
         qty:Math.max(1, Number($("sectionQtyInput").value) || 1),
-        status:$("sectionStatusInput").value
+        status:$("sectionStatusInput").value,
+        template:$("sectionTemplateInput").value,
+        frameColour:$("frameColourInput").value.trim(),
+        glassColour:$("glassColourInput").value.trim(),
+        glassType:$("glassTypeInput").value,
+        glassThickness:$("glassThicknessInput").value.trim()
       };
       if(editId){
         projectSections = projectSections.map(s => s.id === editId ? {...s, ...payload} : s);
@@ -858,6 +914,7 @@
       if(!section) return;
       activeSectionId = id;
       activeProjectId = section.projectId;
+      applySectionTemplate(section);
       drawingObjects = section.drawingObjects?.length ? structuredClone(section.drawingObjects) : [];
       drawingRevision = section.revision || 0;
       $("revisionLabel").textContent = `Rev. ${drawingRevision}`;
@@ -904,7 +961,7 @@
       activeProjectId = section.projectId;
       getWorkspaceRecord(id);
       $("workspaceSectionName").textContent = section.name;
-      $("workspaceSectionMeta").textContent = `${section.location} · ${section.type} · Qty ${section.qty}`;
+      $("workspaceSectionMeta").textContent = `${section.location} · ${section.type} · Qty ${section.qty} · Frame ${section.frameColour||"-"} · Glass ${section.glassType||"Normal"} ${section.glassThickness||"-"}mm ${section.glassColour||""}`;
       activeWorkspaceTab = "overview";
       renderWorkspace();
       showScreen("sectionWorkspace");
@@ -972,7 +1029,7 @@
           <div class="workspace-list">
             ${record.measurements.length ? record.measurements.map(m => `
               <div class="workspace-item">
-                <div class="workspace-item-main"><strong>${escapeHtml(m.label)}</strong><small>${escapeHtml(m.value)} mm · ${escapeHtml(m.note || "No note")}</small></div>
+                <div class="workspace-item-main"><strong>${escapeHtml(m.label)}</strong><small>${escapeHtml(m.value)} mm · Measured by ${escapeHtml(m.measuredBy || APP_CONFIG.ownerName)} · ${escapeHtml(m.note || "No note")}</small></div>
                 <button class="mini-btn danger" onclick="deleteWorkspaceItem('measurements','${m.id}')">Delete</button>
               </div>`).join("") : '<div class="workspace-empty">No measurements yet.</div>'}
           </div>`;
@@ -1042,7 +1099,7 @@
         fields.innerHTML = `
           <div class="field"><label>LABEL</label><input id="wsField1" placeholder="e.g. Opening Width"></div>
           <div class="field"><label>VALUE (MM)</label><input id="wsField2" type="number" placeholder="1245"></div>
-          <div class="field"><label>NOTE</label><input id="wsField3" placeholder="Optional note"></div>`;
+          <div class="field"><label>NOTE</label><input id="wsField3" placeholder="Optional note"></div><div class="field"><label>MEASURED BY</label><input id="wsField4" value="${APP_CONFIG.ownerName}" placeholder="Staff name"></div>`;
       } else if(type === "photo"){
         title.textContent = "Add site photo record";
         desc.textContent = "Prototype mode stores photo metadata locally.";
@@ -1085,7 +1142,7 @@
       }
 
       if(workspaceFormType === "measurement"){
-        record.measurements.push({id:"wm"+Date.now(),label:v1,value:v2 || "0",note:v3});
+        record.measurements.push({id:"wm"+Date.now(),label:v1,value:v2 || "0",note:v3,measuredBy:v4 || APP_CONFIG.ownerName,time:new Date().toLocaleString()});
         addActivity(APP_CONFIG.ownerInitials,`Measurement added: ${v1}`,`${v2 || 0} mm`,"measurement");
       } else if(workspaceFormType === "photo"){
         record.photos.push({id:"wp"+Date.now(),title:v1,stage:v2 || "Site",note:v3});
@@ -1111,6 +1168,70 @@
       toast("Item deleted");
     };
 
+
+    function activeProject(){ return projects.find(p=>p.id===activeProjectId); }
+    function projectNavigationQuery(project){ return (project?.map || project?.address || project?.name || "").trim(); }
+    function openGoogleMaps(){
+      const q=projectNavigationQuery(activeProject());
+      if(!q){toast("Project location not available");return;}
+      if(/^https?:\/\//i.test(q)){window.open(q,"_blank");return;}
+      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`,"_blank");
+    }
+    function openWaze(){
+      const q=projectNavigationQuery(activeProject());
+      if(!q){toast("Project location not available");return;}
+      window.open(`https://waze.com/ul?q=${encodeURIComponent(q)}&navigate=yes`,"_blank");
+    }
+    $("googleMapsBtn").onclick=openGoogleMaps;
+    $("wazeBtn").onclick=openWaze;
+
+    const ATTENDANCE_KEY="ajc_attendance_v1";
+    let attendance=load(ATTENDANCE_KEY,[]);
+    function saveAttendance(){save(ATTENDANCE_KEY,attendance);}
+    function todayKey(){return new Date().toISOString().slice(0,10);}
+    function fmtTime(iso){return iso?new Date(iso).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"--:--";}
+    function calcHours(a,b){return a&&b?Math.max(0,(new Date(b)-new Date(a))/36e5):0;}
+    function renderAttendance(){
+      const today=attendance.filter(r=>r.date===todayKey()).slice(-1)[0];
+      $("todayPunchIn").textContent=fmtTime(today?.in);
+      $("todayPunchOut").textContent=fmtTime(today?.out);
+      $("todayHours").textContent=calcHours(today?.in,today?.out).toFixed(1);
+      $("attendanceCount").textContent=attendance.length;
+      $("punchStatus").textContent=today?.in&&!today?.out?"Punched in":"Not punched in";
+      $("attendanceList").innerHTML=attendance.slice().reverse().map(r=>`<div class="workspace-item"><div class="workspace-item-main"><strong>${escapeHtml(r.staff)}</strong><small>${r.date} · ${fmtTime(r.in)} → ${fmtTime(r.out)} · ${calcHours(r.in,r.out).toFixed(1)}h · ${escapeHtml(r.project||"No site")}</small></div></div>`).join("")||'<div class="workspace-empty">No attendance records yet.</div>';
+    }
+    $("punchInBtn").onclick=()=>{
+      const staff=$("punchStaffName").value.trim()||APP_CONFIG.ownerName;
+      const open=attendance.find(r=>r.staff===staff&&r.date===todayKey()&&r.in&&!r.out);
+      if(open){toast("Already punched in");return;}
+      attendance.push({id:"att"+Date.now(),date:todayKey(),staff,project:$("punchProject").value.trim(),in:new Date().toISOString(),out:null});
+      saveAttendance();renderAttendance();toast("Punch in recorded");
+    };
+    $("punchOutBtn").onclick=()=>{
+      const staff=$("punchStaffName").value.trim()||APP_CONFIG.ownerName;
+      const open=[...attendance].reverse().find(r=>r.staff===staff&&r.date===todayKey()&&r.in&&!r.out);
+      if(!open){toast("No active punch in");return;}
+      open.out=new Date().toISOString();saveAttendance();renderAttendance();toast("Punch out recorded");
+    };
+    renderAttendance();
+
+    function applySectionTemplate(section){
+      if(!section || section.drawingObjects?.length) return;
+      if(section.template==="2door-sliding" || section.template==="2door-swing"){
+        section.drawingObjects=[
+          {id:newId(),type:"frame",x:160,y:120,w:580,h:280},
+          {id:newId(),type:"glass",x:175,y:135,w:270,h:250},
+          {id:newId(),type:"glass",x:455,y:135,w:270,h:250},
+          {id:newId(),type:"line",x1:450,y1:120,x2:450,y2:400}
+        ];
+        if(section.template==="2door-sliding"){
+          section.drawingObjects.push({id:newId(),type:"arrow",x1:390,y1:260,x2:300,y2:260},{id:newId(),type:"arrow",x1:510,y1:260,x2:600,y2:260});
+        }else{
+          section.drawingObjects.push({id:newId(),type:"arrow",x1:300,y1:260,x2:210,y2:260},{id:newId(),type:"arrow",x1:600,y1:260,x2:690,y2:260});
+        }
+      }
+    }
+
     // ---------- Functional SVG drawing editor ----------
     const DRAWING_KEY = "ajc_interactive_drawing_v1";
     const drawingSvg = $("drawingSvg");
@@ -1121,6 +1242,7 @@
     let selectedObjectId = null;
     let drawingStart = null;
     let drawingPreview = null;
+    let moveState = null;
     let undoStack = [];
     let redoStack = [];
     let zoomLevel = 1;
@@ -1182,8 +1304,13 @@
           if(activeTool !== "select") return;
           e.stopPropagation();
           selectedObjectId = el.dataset.id;
+          const obj=drawingObjects.find(o=>o.id===selectedObjectId);
+          const p=svgPoint(e);
+          snapshot();
+          moveState={id:selectedObjectId,start:p,original:structuredClone(obj)};
+          drawingSvg.setPointerCapture?.(e.pointerId);
           renderDrawing();
-          editorHint.textContent = "Object selected. Use Delete or choose another tool.";
+          editorHint.textContent = "Drag selected object to reposition it.";
         });
       });
     }
@@ -1197,6 +1324,9 @@
         return `<rect data-id="${o.id}" class="drawing-object draw-glass${selected}" x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="2"/>
           <line x1="${o.x}" y1="${o.y}" x2="${o.x+o.w}" y2="${o.y+o.h}" stroke="#76A9E8" stroke-width="1"/>
           <line x1="${o.x+o.w}" y1="${o.y}" x2="${o.x}" y2="${o.y+o.h}" stroke="#76A9E8" stroke-width="1"/>`;
+      }
+      if(o.type === "line"){
+        return `<line data-id="${o.id}" class="drawing-object draw-line${selected}" x1="${o.x1}" y1="${o.y1}" x2="${o.x2}" y2="${o.y2}"/>`;
       }
       if(o.type === "arrow"){
         return `<line data-id="${o.id}" class="drawing-object draw-arrow${selected}" x1="${o.x1}" y1="${o.y1}" x2="${o.x2}" y2="${o.y2}" marker-end="url(#arrowHead)"/>`;
@@ -1226,6 +1356,7 @@
         frame:"Drag to create an aluminium frame.",
         glass:"Drag to create a glass panel.",
         measure:"Drag between two points, then enter the measurement.",
+        line:"Drag to create a line. In Select mode, drag it to reposition.",
         arrow:"Drag to create an arrow.",
         text:"Tap the drawing to place text.",
         delete:"Tap Delete again after selecting an object.",
@@ -1290,6 +1421,16 @@
     }
 
     function moveDraw(evt){
+      if(moveState && activeTool==="select"){
+        const p=svgPoint(evt),dx=p.x-moveState.start.x,dy=p.y-moveState.start.y;
+        const o=drawingObjects.find(x=>x.id===moveState.id),b=moveState.original;
+        if(o){
+          if(["frame","glass","text"].includes(o.type)){o.x=Math.round(b.x+dx);o.y=Math.round(b.y+dy);}
+          else{o.x1=Math.round(b.x1+dx);o.y1=Math.round(b.y1+dy);o.x2=Math.round(b.x2+dx);o.y2=Math.round(b.y2+dy);}
+          renderDrawing();
+        }
+        return;
+      }
       if(!drawingStart) return;
       drawingPreview = svgPoint(evt);
       const dx = drawingPreview.x - drawingStart.x;
@@ -1298,6 +1439,7 @@
     }
 
     function endDraw(evt){
+      if(moveState){moveState=null;toast("Object moved");return;}
       if(!drawingStart) return;
       const end = svgPoint(evt);
       const x=Math.min(drawingStart.x,end.x), y=Math.min(drawingStart.y,end.y);
@@ -1309,6 +1451,8 @@
       snapshot();
       if(activeTool === "frame" || activeTool === "glass"){
         drawingObjects.push({id:newId(),type:activeTool,x:Math.round(x),y:Math.round(y),w:Math.round(w),h:Math.round(h)});
+      } else if(activeTool === "line"){
+        drawingObjects.push({id:newId(),type:"line",x1:Math.round(drawingStart.x),y1:Math.round(drawingStart.y),x2:Math.round(end.x),y2:Math.round(end.y)});
       } else if(activeTool === "arrow"){
         drawingObjects.push({id:newId(),type:"arrow",x1:Math.round(drawingStart.x),y1:Math.round(drawingStart.y),x2:Math.round(end.x),y2:Math.round(end.y)});
       } else if(activeTool === "measure"){
